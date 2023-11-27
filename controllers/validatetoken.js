@@ -13,6 +13,4 @@ const handleValidateToken = (req, res, db, jwt) => {
     } 
   }
 
-  module.exports = {
-    handleValidateToken: handleValidateToken
-}
+export default handleValidateToken;

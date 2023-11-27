@@ -1,6 +1,7 @@
 {
   "name": "smart-brain-api",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,6 +19,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.0.1",
+    "node-fetch": "^3.3.2",
     "pg": "^8.11.3"
   },
   "devDependencies": {

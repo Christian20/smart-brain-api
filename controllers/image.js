@@ -53,7 +53,4 @@ const handleClarifaiAPICall = (req, res) => {
         .catch(err => res.status(400).json('Unable to work with Clarifai API'));
 }
 
-module.exports = {
-    handleImage: handleImage,
-    handleClarifaiAPICall: handleClarifaiAPICall
-}
+export { handleImage, handleClarifaiAPICall };

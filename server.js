@@ -1,14 +1,15 @@
-const express = require('express');
-const bcrypt = require('bcrypt-nodejs');
-const cors = require('cors');
-const knex = require('knex');
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
-const register = require('./controllers/register');
-const signin = require('./controllers/signin');
-const profile = require('./controllers/profile');
-const image = require('./controllers/image');
-const validatetoken = require('./controllers/validatetoken');
+import express from 'express';
+import bcrypt from 'bcrypt-nodejs';
+import cors from 'cors';
+import knex from 'knex';
+import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+import register from './controllers/register.js';
+import signin from './controllers/signin.js';
+import profile from './controllers/profile.js';
+import { handleImage, handleClarifaiAPICall } from './controllers/image.js';
+import validatetoken from './controllers/validatetoken.js';
+
 
 const db = knex({
     client: 'pg',
@@ -73,8 +74,8 @@ app.post('/validatetoken', tokenValidation, (req, res) => validatetoken.handleVa
 app.post('/signin', (req, res) => signin.handleSignIn(req, res, db, bcrypt, generateSessionToken));
 app.post('/register', (req, res) => register.handleRegister(req, res, db, bcrypt, generateSessionToken));
 app.get('/profile/:id', tokenValidation, (req, res) => profile.handleProfile(req, res, db));
-app.put('/image', tokenValidation, (req, res) => image.handleImage(req, res, db));
-app.post('/clarifai', tokenValidation, (req, res) => image.handleClarifaiAPICall(req, res));
+app.put('/image', tokenValidation, (req, res) => handleImage(req, res, db));
+app.post('/clarifai', tokenValidation, (req, res) => handleClarifaiAPICall(req, res));
 
 app.listen(3000, () => {
     console.log('app is running on port 3000');

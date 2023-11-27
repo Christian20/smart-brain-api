@@ -33,6 +33,4 @@ const handleRegister = (req, res, db, bcrypt, generateSessionToken) => {
     .catch(err => res.status(400).json('unable to register'));
 }
 
-module.exports = {
-    handleRegister: handleRegister
-}
+export default handleRegister;

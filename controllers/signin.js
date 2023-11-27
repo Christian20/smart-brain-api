@@ -26,6 +26,4 @@ const handleSignIn = (req, res, db, bcrypt, generateSessionToken) => {
     .catch(err => res.status(400).json('wrong credentials'))
 }
 
-module.exports = {
-    handleSignIn: handleSignIn
-}
+export default handleSignIn;
