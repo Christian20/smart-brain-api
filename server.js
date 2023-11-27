@@ -4,11 +4,11 @@ import cors from 'cors';
 import knex from 'knex';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import register from './controllers/register.js';
-import signin from './controllers/signin.js';
-import profile from './controllers/profile.js';
+import handleRegister from './controllers/register.js';
+import handleSignIn from './controllers/signin.js';
+import handleProfile from './controllers/profile.js';
 import { handleImage, handleClarifaiAPICall } from './controllers/image.js';
-import validatetoken from './controllers/validatetoken.js';
+import handleValidateToken from './controllers/validatetoken.js';
 
 
 const db = knex({
@@ -70,10 +70,10 @@ function generateSessionToken(user) {
 
 app.get('/', (req, res) => res.send("success"));
 // Route for token validation
-app.post('/validatetoken', tokenValidation, (req, res) => validatetoken.handleValidateToken(req, res, db, jwt));
-app.post('/signin', (req, res) => signin.handleSignIn(req, res, db, bcrypt, generateSessionToken));
-app.post('/register', (req, res) => register.handleRegister(req, res, db, bcrypt, generateSessionToken));
-app.get('/profile/:id', tokenValidation, (req, res) => profile.handleProfile(req, res, db));
+app.post('/validatetoken', tokenValidation, (req, res) => handleValidateToken(req, res, db, jwt));
+app.post('/signin', (req, res) => handleSignIn(req, res, db, bcrypt, generateSessionToken));
+app.post('/register', (req, res) => handleRegister(req, res, db, bcrypt, generateSessionToken));
+app.get('/profile/:id', tokenValidation, (req, res) => handleProfile(req, res, db));
 app.put('/image', tokenValidation, (req, res) => handleImage(req, res, db));
 app.post('/clarifai', tokenValidation, (req, res) => handleClarifaiAPICall(req, res));
 
