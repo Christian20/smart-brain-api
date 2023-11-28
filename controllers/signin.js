@@ -1,11 +1,8 @@
-console.log('handling sign-in...');
 const handleSignIn = (req, res, db, bcrypt, generateSessionToken) => {
-    console.log('handling sign-in...');
     const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).json('Incorrect form submission.');
     }
-    console.log('req body: ', req.body);
     db.select('email', 'hash').from('login')
     .where('email', '=', email)
     .then(data => {
