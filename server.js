@@ -10,6 +10,15 @@ import handleProfile from './controllers/profile.js';
 import { handleImage, handleClarifaiAPICall } from './controllers/image.js';
 import handleValidateToken from './controllers/validatetoken.js';
 
+// const db = knex({
+//   client: 'pg',
+//   connection: {
+//       host: '127.0.0.1',
+//       user: 'postgres',
+//       password: 'admin',
+//       database: 'smart-brain'
+//   }
+// });
 
 const db = knex({
     client: 'pg',
@@ -71,11 +80,13 @@ function generateSessionToken(user) {
 app.get('/', (req, res) => res.send("success"));
 // Route for token validation
 app.post('/validatetoken', tokenValidation, (req, res) => handleValidateToken(req, res, db, jwt));
+console.log('accessing handleSignIn sign-in...');
 app.post('/signin', (req, res) => handleSignIn(req, res, db, bcrypt, generateSessionToken));
 app.post('/register', (req, res) => handleRegister(req, res, db, bcrypt, generateSessionToken));
 app.get('/profile/:id', tokenValidation, (req, res) => handleProfile(req, res, db));
 app.put('/image', tokenValidation, (req, res) => handleImage(req, res, db));
-app.post('/clarifai', tokenValidation, (req, res) => handleClarifaiAPICall(req, res));
+//app.post('/clarifai', tokenValidation, (req, res) => handleClarifaiAPICall(req, res));
+app.post('/clarifai', (req, res) => handleClarifaiAPICall(req, res));
 
 app.listen(3000, () => {
     console.log('app is running on port 3000');
