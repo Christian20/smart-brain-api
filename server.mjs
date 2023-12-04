@@ -34,6 +34,8 @@ const db = knex({
     }
 });
 
+const jwtTokenExpiration = process.env.JWT_TOKEN_EXPIRATION;
+
 const app = express();
 
 app.use(express.json());
@@ -74,7 +76,7 @@ function generateSessionToken(user) {
     };
 
     // Sign the token with a secret key and set an expiration time
-    const token = jwt.sign(payload, secretKey, { expiresIn: '10m' });
+    const token = jwt.sign(payload, secretKey, { expiresIn: jwtTokenExpiration });
     return token;
 }
 
